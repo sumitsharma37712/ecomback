@@ -1,0 +1,61 @@
+const expressAsyncHandler = require("express-async-handler");
+const Category = require("../database/model/Card");
+
+
+const Categorya=expressAsyncHandler(async(req,res)=>{
+    const {name,icon,color}=req.body
+    try {
+            const response = await Category.create({
+                name, icon,color
+                // filename:req.file.filename
+            });
+            res.status(200).send(response);
+            console.log(`add Categry : ${name}`);
+       
+        
+    } catch (error) {
+        res.status(404).json({error:error})        
+    }
+})
+const allCat=expressAsyncHandler(async(req,res)=>{
+    try{
+        const response=await Category.find({})
+        res.status(200).json({response})
+        console.log(response)
+
+    }catch(err){
+        res.status(400).json({err})
+    }
+})
+
+const selectCat=expressAsyncHandler(async(req,res)=>{
+    const sel=req.params.id
+    try{
+        const response=await Category.findById(sel)
+        res.status(200).json(response)  
+
+    }catch(err){
+        res.status(400).json({err})
+    }
+
+})
+
+const delCategory=expressAsyncHandler(async(req,res)=>{
+    const del=req.params.id
+    try {
+        let Cat = await Category.deleteOne({ _id: del });
+        if (Cat) {
+          res.send("delete success");
+        } else {
+          res.send("not delete data");
+        }
+      } catch (e) {
+        res.status(404).send(e);
+      }
+
+})
+
+
+
+
+module.exports={Categorya,delCategory,allCat,selectCat}
