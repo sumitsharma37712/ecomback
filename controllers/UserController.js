@@ -6,9 +6,9 @@ const bcryptjs=require('bcryptjs')
 // console.log(bcryptjs)
 const UserReg=asyncHandler(async(req,res)=>{
     const {name,contact,email,password:plainTextPassword}=req.body;
-    console.log(email)
+    // console.log(email)
     password = await bcryptjs.hash(plainTextPassword, salt);
-    console.log(password)
+    // console.log(password)
     try {
         const check = await couser.findOne({ email: email });
         if(check){
@@ -37,7 +37,7 @@ const UserAuth = asyncHandler(async (req, res) => {
 
     try {
         if (!emailver) {
-            console.log(`User not valid: ${email}`);
+            // console.log(`User not valid: ${email}`);
             res.status(404).send(`Something wrong, ${email} not found`);
         } else if (await bcryptjs.compare(await password, emailver.password)) {
             const tdata = {
@@ -58,14 +58,15 @@ const UserAuth = asyncHandler(async (req, res) => {
                 email: emailver.email,
                 token: token,
             });
+            // res.status(200).json({data:data})
 
-            console.log('Access granted');
+            // console.log('Access granted');
         } else {
-            console.log(`User not valid`);
+            // console.log(`User not valid`);
             res.status(404).send(`Something went wrong, user not found`);
         }
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         res.status(400).json({ error:'error' });
     }
 });

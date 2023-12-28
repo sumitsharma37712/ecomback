@@ -21,7 +21,7 @@ const allCat=expressAsyncHandler(async(req,res)=>{
     try{
         const response=await Category.find({})
         res.status(200).json({response})
-        console.log(response)
+        // console.log(response)
 
     }catch(err){
         res.status(400).json({err})
@@ -32,13 +32,35 @@ const selectCat=expressAsyncHandler(async(req,res)=>{
     const sel=req.params.id
     try{
         const response=await Category.findById(sel)
-        res.status(200).json(response)  
+        res.status(200).json(response)
 
     }catch(err){
         res.status(400).json({err})
     }
 
 })
+
+const updateCategory=expressAsyncHandler(async(req,res)=>{
+    const upid=req.params.id
+    const {name,icon,color}=req.body
+    try {
+        const update = await Category.findByIdAndUpdate({_id:upid},{ $set: { name,icon,color }})
+        if (update) {
+            res.status(200).send("update success");
+            console.log("update success");
+          } else {
+            res.status(200).send("update not success");
+            console.log("update not success");
+          }
+
+        
+    } catch (error) {
+        console.log('errr')
+        res.status(400).send(error)
+        
+    }
+})
+
 
 const delCategory=expressAsyncHandler(async(req,res)=>{
     const del=req.params.id
@@ -58,4 +80,4 @@ const delCategory=expressAsyncHandler(async(req,res)=>{
 
 
 
-module.exports={Categorya,delCategory,allCat,selectCat}
+module.exports={Categorya,delCategory,updateCategory,allCat,selectCat}

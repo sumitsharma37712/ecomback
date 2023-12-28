@@ -42,6 +42,10 @@ const ProductSchema=mongoose.Schema({
         type:Number,
         default:0
     },
+    numReviews:{
+        type:Number,
+        default:0
+    },
     isFetured:{
         type:Boolean,
         default:false

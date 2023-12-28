@@ -2,14 +2,21 @@ const express= require('express')
 const session = require('express-session')
 const router=new express.Router()
 
+
+// connection const variable 
+const {  UserReg, UserAuth } = require('../controllers/UserController');
+const { Categorya, delCategory, allCat, selectCat, updateCategory } = require('../controllers/CardController');
+const { CreateProduct, selectProduct, allProduct, delProduct, updateProduct, selectProcat, countProduct, filterProduct, featuredProduct } = require('../controllers/ProductController');
+
+
+
+
 const cors = require("cors");
 router.use(cors());
 const bodyParser = require("body-parser"); // Middleware
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const cookie = require("cookie-parser");
-const {  UserReg, UserAuth } = require('../controllers/UserController');
-const { Categorya, delCategory, allCat, selectCat } = require('../controllers/CardController');
 const salt = 10;
 JWT_SECRET = process.env.JWT;
 
@@ -57,6 +64,20 @@ router.route('/api/category/new').post(Categorya)
 router.route('/api/category').get(allCat)
 router.route('/api/category/:id').get(selectCat)
 router.route('/api/category/new/:id').delete(delCategory)
+router.route('/api/category/:id').put(updateCategory)
+
+
+// product Route
+router.route('/api/products/new').post(CreateProduct)
+router.route('/api/products').get(allProduct)
+// router.route('/api/products/:id').get(selectProduct)
+router.route('/api/products/new/:id').delete(delProduct)
+router.route('/api/products/:id').put(updateProduct)
+// filter product categories
+router.route('/api/products/:id').get(selectProcat)
+router.route('/api/products/get/count').get(countProduct)
+router.route('/api/products/get/fetures/:count').get(featuredProduct)
+// router.route('/api/products/fil').get(filterProduct)
 
 
 

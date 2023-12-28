@@ -32,3 +32,4 @@ const UserSchema=mongoose.Schema({
 const couser=mongoose.model('User',UserSchema)
  
  module.exports=couser;
+ 
