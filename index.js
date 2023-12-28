@@ -4,7 +4,9 @@ const router = require('./Routers/router');
 const app = new express();
 const PORT = process.env.PORT || 4000;
 const cors = require('cors');
+// const connectDB = require('./database/config');
 
+// connectDB()
 // Order of middleware matters
 app.use(cors({
     origin: 'http://localhost:3000',
